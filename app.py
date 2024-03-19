@@ -105,7 +105,9 @@ def main():
             st.write(top5_by_hour)
 
             # 그래프 생성
-            plt.rc('font', family='NanumGothic')
+            font_path = 'tway_fly.ttf'  # 폰트 파일 경로 예시
+            font_prop = fm.FontProperties(fname=font_path)
+            plt.rc('font', family=font_prop.get_name())
             fig, ax = plt.subplots()
             top5_by_hour.plot(kind='bar', ax=ax, color='skyblue')
             plt.xlabel("상권")
