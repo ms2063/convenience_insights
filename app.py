@@ -105,7 +105,7 @@ def main():
             st.write(top5_by_hour)
 
             # 그래프 생성
-            plt.rc('font', family='tway_fly')
+            plt.rc('font', family='나눔고딕')
             fig, ax = plt.subplots()
             top5_by_hour.plot(kind='bar', ax=ax, color='skyblue')
             plt.xlabel("상권")
