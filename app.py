@@ -1,26 +1,42 @@
 import streamlit as st
+from streamlit_option_menu import option_menu
+
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
 
 def main():
-    st.sidebar.title('메뉴')
-
-    menu = st.sidebar.radio('메뉴를 선택하세요:', ['🏠 홈', '🗺️ 강남구 편의점 분포 현황', '📊 강남구 편의점 매출 현황', '💰 매출 현황 순위', '📈 매출 예측 모델링'])
-
+    custom_css = """
+    <style>
+    @font-face {
+    font-family: 'twayfly';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_tway@1.0/twayfly.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    }
+    .stOptionMenu > div { font-family: 'twayfly'; }
+    </style>
+    """
+    st.markdown(custom_css, unsafe_allow_html=True)
+    with st.sidebar:
+        st.title('메뉴')
+        menu = option_menu("메뉴를 선택하세요:", ['홈', '강남구 편의점 분포 현황', '강남구 편의점 매출 현황', '매출 현황 순위', '매출 예측 모델링'],
+                           icons=['house', 'map', 'graph-up-arrow', 'cash-coin', 'cpu-fill'], menu_icon="cast", default_index=0)
+    
     # CSV 파일 불러오기
     file_path = 'data/final_reordered.csv'
     df = pd.read_csv(file_path)
 
-    if menu == '🏠 홈':
+    if menu == '홈':
         st.markdown("<h1 style='text-align: center;'>강남구 편의점 매출 예측 🏪</h1>", unsafe_allow_html=True)
         st.image('편의점 사진.jpg', use_column_width=True)
         st.image('홈 화면.png', use_column_width=True)
         
-    elif menu == '🗺️ 강남구 편의점 분포 현황': 
+    elif menu == '강남구 편의점 분포 현황': 
         st.markdown("<h1 style='text-align:center;'>강남구 편의점 분포 현황 🗺️</h1>", unsafe_allow_html=True)
         st.write('상권에 따른 편의점 점포 수 지도 시각화 보여주기')
     
-    elif menu == '📊 강남구 편의점 매출 현황':
+    elif menu == '강남구 편의점 매출 현황':
         st.markdown("<h1 style='text-align: center;'>강남구 편의점 매출 현황 📊</h1>", unsafe_allow_html=True)
 
         # 행정동 코드명 가져오기
@@ -62,7 +78,7 @@ def main():
             else:
                 st.write("선택된 상권에 대한 데이터가 없습니다.")
                 
-    elif menu == '💰 매출 현황 순위':
+    elif menu == '매출 현황 순위':
         st.markdown("<h1 style='text-align: center;'>매출 현황 순위 💰</h1>", unsafe_allow_html=True)
 
         # 각 시간대별 데이터 프레임 생성
@@ -89,6 +105,7 @@ def main():
             st.write(top5_by_hour)
 
             # 그래프 생성
+            plt.rc('font', family='tway_fly')
             fig, ax = plt.subplots()
             top5_by_hour.plot(kind='bar', ax=ax, color='skyblue')
             plt.xlabel("상권")
@@ -98,7 +115,7 @@ def main():
         else:
             st.write("데이터가 없습니다.")
 
-    elif menu == '📈 매출 예측 모델링':
+    elif menu == '매출 예측 모델링':
         st.markdown("<h1 style='text-align: center;'>매출 예측 모델링 📈</h1>", unsafe_allow_html=True)
         st.write("매출 예측 모델링 내용을 여기에 추가하세요.")
 
