@@ -1,5 +1,8 @@
 matplotlib
 pandas
 streamlit
-streamlit_option_menu
-matplotlib.font_manager
+streamlit-option-menu
+streamlit-folium
+geopandas
+numpy
+folium
