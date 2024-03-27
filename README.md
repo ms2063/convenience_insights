@@ -53,7 +53,8 @@
 <h1 align="left">
   <samp>💡Collected Data💡</samp>
 </h1>
-<a target="_blank" href="commercial_area_analysis_service_data.png"></a>
+
+![commercial_area_analysis_service_data](https://github.com/ms2063/convenience_insights/assets/157222473/29095fd0-cc0d-4ba9-8173-5912ebc89a54)
 
 <h1 align="left">
   <samp>💡Data preprocessing and engineering💡</samp>
