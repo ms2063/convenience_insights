@@ -9,24 +9,33 @@ from streamlit_folium import folium_static
 from folium.plugins import MarkerCluster
 import time
 import os
+from expectation import expectation_content
 
-fpath = os.path.join(os.getcwd(), "Nanum_Gothic/NanumGothic-Regular.ttf")
+fpath = os.path.join(os.getcwd(), "font/NanumGothic-Regular.ttf")
 prop = fm.FontProperties(fname=fpath)
 
 def main():
-    st.set_page_config(page_title='강남구 편의점 매출 예측', page_icon="🏪", layout="wide")
+    custom_css = """
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+
+    html, body, [class*="st-"] {
+        font-family: 'Nanum Gothic', sans-serif !important;
+    }
+    </style>
+    """
+    st.markdown(custom_css, unsafe_allow_html=True)
 
     with st.sidebar:
-        st.title('메뉴')
         menu = option_menu("메뉴를 선택하세요:", ['홈', '강남구 편의점 분포 현황', '강남구 편의점 매출 현황', '매출 현황 순위', '매출 예측 모델링'],
                    icons=['house', 'map', 'graph-up-arrow', 'cash-coin', 'cpu-fill'], menu_icon="cast", default_index=0)
     
     # CSV 파일 불러오기
-    file_path = 'data/final_reordered.csv'
+    file_path = 'data2/final_reordered.csv'
     df = pd.read_csv(file_path)
 
     with st.spinner('로딩 중...'):
-        time.sleep(2)  # Simulating loading time
+        time.sleep(0.1)  # Simulating loading time
 
         if menu == '홈':
             st.markdown("<h1 style='text-align: center;'>강남구 편의점 매출 예측 🏪</h1>", unsafe_allow_html=True)
@@ -34,11 +43,11 @@ def main():
             st.image('홈 화면.png', use_column_width=True)
 
         elif menu == '강남구 편의점 분포 현황': 
-            st.markdown("<h1 style='text-align:center;'>강남구 편의점 분포 현황 🗺️</h1>", unsafe_allow_html=True)
+            st.markdown("<h1 style='text-align:center;'>강남구 편의점 분포 현황 🗺️ <span style='font-size:smaller;'>(2021년 1분기 ~ 2023년 3분기)</span></h1>", unsafe_allow_html=True)
             st.write('궁금한 상권을 선택하세요 👀')
 
             # 기존 데이터 프레임과 상권 좌표 정보가 병합된 파일 경로
-            merged_file_path = 'data/map_data.csv'
+            merged_file_path = 'data2/map_data.csv'
 
             # 병합된 데이터 프레임 불러오기
             merged_df = pd.read_csv(merged_file_path)
@@ -54,7 +63,8 @@ def main():
 
             # 각 점에 대한 정보를 Folium으로 추가
             for idx, row in merged_df.iterrows():
-                popup_text = f"상권명: {row['상권_코드_명']}, 행정동: {row['행정동_코드_명']}, 시간대_매출금액_평균: {row['시간대_매출금액_평균']}"
+                avg_sales = row['시간대_매출금액_평균'] / 1_000_000  # 백만원 단위로 변환
+                popup_text = f"상권명: {row['상권_코드_명']}, 행정동: {row['행정동_코드_명']}, 시간대_매출금액_평균: {avg_sales:.2f} 백만원"
                 folium.Marker([row['latitude'], row['longitude']], popup=popup_text).add_to(marker_cluster)
 
             # Streamlit에 Folium 맵 표시
@@ -82,7 +92,7 @@ def main():
                     plt.xticks(fontproperties=prop)  # 폰트 설정
                     plt.yticks(fontproperties=prop)  # 폰트 설정
                     plt.xlabel('시간대', fontsize=12, fontproperties=prop)  # 폰트 설정
-                    plt.ylabel('평균 매출금액', fontsize=12, fontproperties=prop)  # 폰트 설정
+                    plt.ylabel('평균 매출 금액 (단위: 원)', fontsize=12, fontproperties=prop)  # 폰트 설정
                     plt.title(f"{selected_dong}의 시간대별 평균 매출", fontsize=14, fontproperties=prop)  # 폰트 설정
 
                     # y축의 단위 설정
@@ -110,7 +120,7 @@ def main():
                     plt.xticks(fontproperties=prop)  # 폰트 설정
                     plt.yticks(fontproperties=prop)  # 폰트 설정
                     plt.xlabel('시간대', fontsize=12, fontproperties=prop)  # 폰트 설정
-                    plt.ylabel('평균 매출금액', fontsize=12, fontproperties=prop)  # 폰트 설정
+                    plt.ylabel('평균 매출 금액 (단위: 원)', fontsize=12, fontproperties=prop)  # 폰트 설정
                     plt.title(f"{selected_biz_area} 상권의 시간대별 평균 매출", fontsize=14, fontproperties=prop)  # 폰트 설정
 
                     # y축의 단위 설정
@@ -149,7 +159,7 @@ def main():
                 fig, ax = plt.subplots()
                 top5_by_hour.plot(kind='bar', ax=ax, color='skyblue')
                 plt.xlabel("상권", fontsize=12, fontproperties=prop)  # 폰트 설정
-                plt.ylabel("평균 매출금액", fontsize=12, fontproperties=prop)  # 폰트 설정
+                plt.ylabel("평균 매출 금액 (단위: 원)", fontsize=12, fontproperties=prop)  # 폰트 설정
                 plt.title(f"{selected_time_range} 시간대 매출이 가장 높은 상권 TOP5", fontsize=14, fontproperties=prop)  # 폰트 설정
                 plt.xticks(fontproperties=prop)  # 폰트 설정
                 plt.yticks(fontproperties=prop)  # 폰트 설정
@@ -165,8 +175,7 @@ def main():
                 st.write("데이터가 없습니다.")
 
         elif menu == '매출 예측 모델링':
-            st.markdown("<h1 style='text-align: center;'>매출 예측 모델링 📈</h1>", unsafe_allow_html=True)
-            st.write("매출 예측 모델링 내용을 여기에 추가하세요.")
+            expectation_content()
 
 if __name__ == "__main__":
     main()
