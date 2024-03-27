@@ -47,7 +47,7 @@
   <samp>🖥️Demo pages🖥️</samp>
 </h1>
 <samp>
-• Our Demo pages implemented using Streamlit are as follows → <a target="_blank" href="https://mulcamp-miniproject-tsxpry9q44xmqu4hrbtrtj.streamlit.app/">Demo Pages</a>
+• Our Demo pages implemented using Streamlit are as follows → <a target="_blank" href="https://convenienceinsights.streamlit.app/">Demo Pages</a>
 </samp>
 
 <h1 align="left">
