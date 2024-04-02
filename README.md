@@ -51,16 +51,17 @@
 </samp>
 
 <h1 align="left">
-  <samp>💡Collected Data💡</samp>
+  <samp>🛠️Collected Data🛠️</samp>
 </h1>
 
 ![commercial_area_analysis_service_data](https://github.com/ms2063/convenience_insights/assets/157222473/29095fd0-cc0d-4ba9-8173-5912ebc89a54)
 
 <h1 align="left">
-  <samp>💡Data preprocessing and engineering💡</samp>
+  <samp>🔧Data preprocessing and engineering🔧</samp>
 </h1>
 <samp>• In the collected data, unnecessary columns were removed and merged, categorical data were dummy-coded, numerical data were normalized, and Boolean data were binarized. Normalization was performed using the Box-Cox transformation.</samp>
 
+<!--
 <h1 align="left">
   <samp>💡Main Functions💡</samp>
 </h1>
@@ -71,6 +72,7 @@
 - **`type_mean(df, year, month, housing_type)`**: <samp>Visualizes the average transaction prices by district based on the specified year, month, and housing type using a bar chart.</samp>
 - **`house_price_trend(df, sgg_nms, house_type)`**: <samp>Shows the fluctuation trends of transaction prices for the selected districts and real estate types in a line chart.</samp>
 - **`main()`**: <samp>Allows the user to select the analysis type through a user interface and visualizes the necessary data for the chosen analysis. This function constructs a dashboard using Streamlit.</samp>
+-->
 
 <h1 align="left">
   <samp>✨Presentation PDF✨</samp>
