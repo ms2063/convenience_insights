@@ -80,9 +80,9 @@
 </p>
 <p>
 <samp>
-<a target="_blank" href="서울_부동산_시장_인사이트_대시보드.pdf">Korean Version PDF</a>
+<a target="_blank" href="Convenience_Insights_KR.pdf">Korean Version PDF</a>
 <br>
-<a target="_blank" href="Seoul_RealEstate_Insights.pdf">English Version PDF</a>
+<a target="_blank" href="Convenience_Insights_EN.pdf">English Version PDF</a>
 </samp>
 </p>
 
